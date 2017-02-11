@@ -5,5 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :topics
-  validates :username, uniqueness: true
+  validates :username, uniqueness: true, presence: true
 end
