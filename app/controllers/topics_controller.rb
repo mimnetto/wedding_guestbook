@@ -1,5 +1,5 @@
 class TopicsController < ApplicationController
-  before_action :set_topic, only: [:show, :edit, :update, :destroy]
+  before_action :set_topic, only: [:show]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   # GET /topics
   # GET /topics.json
@@ -14,17 +14,18 @@ class TopicsController < ApplicationController
 
   # GET /topics/new
   def new
-    @topic = Topic.new
+    @topic = current_user.topics.build
   end
 
   # GET /topics/1/edit
   def edit
+    @topic = current_user.topics.find(params[:id])
   end
 
   # POST /topics
   # POST /topics.json
   def create
-    @topic = Topic.new(topic_params)
+    @topic = current_user.topics.build(topic_params)
 
     respond_to do |format|
       if @topic.save
@@ -40,6 +41,7 @@ class TopicsController < ApplicationController
   # PATCH/PUT /topics/1
   # PATCH/PUT /topics/1.json
   def update
+    @topic = current_user.topics.find(params[:id])
     respond_to do |format|
       if @topic.update(topic_params)
         format.html { redirect_to topics_path, notice: 'Topic was successfully updated.' }
@@ -54,6 +56,7 @@ class TopicsController < ApplicationController
   # DELETE /topics/1
   # DELETE /topics/1.json
   def destroy
+    @topic = current_user.topics.find(params[:id])
     @topic.destroy
     respond_to do |format|
       format.html { redirect_to topics_url, notice: 'Topic was successfully destroyed.' }
