@@ -12,6 +12,7 @@
     <% flash.each do |name, message| %>
       <div><%= message %></div>
     <% end %>
+    
     <% if current_user %>
       <%= link_to "Sign Out",destroy_user_session_path, method: :delete %>
     <% else %>
